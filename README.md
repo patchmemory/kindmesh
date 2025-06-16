@@ -213,7 +213,7 @@ As a Friend, you can:
 
 ## Batch Entry Guide
 
-The Batch Entry feature allows Friends to import multiple interactions from a spreadsheet. This is useful for organizations that collect data in spreadsheets before entering it into KindMesh.
+The Batch Entry feature allows Friends to import multiple interactions from a spreadsheet. This is useful for organizations that collect data in spreadsheets before entering it into kindmesh.
 
 ### Supported Spreadsheet Formats
 
@@ -429,6 +429,10 @@ To add new features:
    - The application has been updated to include a TTL (Time To Live) parameter for the cache_resource decorator and to enable tracemalloc for better debugging
    - These changes should resolve the warning and improve cache handling
 
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -438,4 +442,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Neo4j for the graph database
 - Streamlit for the web interface
 - The nonprofit community for their valuable feedback
->>>>>>> 6534202 (Initial commit)
