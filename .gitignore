@@ -209,3 +209,5 @@ data/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+scripts/init-db.cypher
