@@ -448,15 +448,16 @@ class GraphDatabase:
             logger.error(f"Error creating recipient: {str(e)}")
             return False
 
-    def save_questionnaire(self, recipient_key: str, section: str, responses: Dict, survey_id: str = None) -> bool:
+    def save_questionnaire(self, recipient_key: str, section: str, responses: Dict, survey_id: str = None, username: str = None) -> bool:
         """
-        Save questionnaire responses for a recipient.
+        Save survey responses for a recipient.
 
         Args:
             recipient_key: Key identifier for the recipient
-            section: Section of the questionnaire (e.g., "Financial", "Employment")
+            section: Section of the survey response (e.g., "Financial", "Employment")
             responses: Dictionary of question-answer pairs
-            survey_id: Optional ID of the survey this questionnaire is based on
+            survey_id: Optional ID of the survey this response is based on
+            username: Username of the user submitting the response
 
         Returns:
             bool: True if responses saved successfully, False otherwise
@@ -465,28 +466,47 @@ class GraphDatabase:
         import json
         responses_json = json.dumps(responses)
 
-        if survey_id:
+        if survey_id and username:
             query = """
+            MATCH (u:User {username: $username})
+            MATCH (s:Survey {id: $survey_id})
             MERGE (r:Recipient {key: $recipient_key})
             ON CREATE SET r.created_at = datetime()
-            MERGE (q:Questionnaire {section: $section, recipient_key: $recipient_key})
+            MERGE (q:SurveyResponse {section: $section, recipient_key: $recipient_key})
+            ON CREATE SET q.created_at = datetime(), q.responses_json = $responses_json, q.survey_id = $survey_id, q.submitted_by = $username
+            ON MATCH SET q.updated_at = datetime(), q.responses_json = $responses_json, q.survey_id = $survey_id, q.submitted_by = $username
+            MERGE (r)-[:RESPONDED_TO]->(s)
+            MERGE (s)-[:HAS_RESPONSE]->(q)
+            MERGE (r)-[:PROVIDED]->(q)
+            RETURN q
+            """
+        elif survey_id:
+            query = """
+            MATCH (s:Survey {id: $survey_id})
+            MERGE (r:Recipient {key: $recipient_key})
+            ON CREATE SET r.created_at = datetime()
+            MERGE (q:SurveyResponse {section: $section, recipient_key: $recipient_key})
             ON CREATE SET q.created_at = datetime(), q.responses_json = $responses_json, q.survey_id = $survey_id
             ON MATCH SET q.updated_at = datetime(), q.responses_json = $responses_json, q.survey_id = $survey_id
+            MERGE (r)-[:RESPONDED_TO]->(s)
+            MERGE (s)-[:HAS_RESPONSE]->(q)
+            MERGE (r)-[:PROVIDED]->(q)
             RETURN q
             """
         else:
             query = """
             MERGE (r:Recipient {key: $recipient_key})
             ON CREATE SET r.created_at = datetime()
-            MERGE (q:Questionnaire {section: $section, recipient_key: $recipient_key})
+            MERGE (q:SurveyResponse {section: $section, recipient_key: $recipient_key})
             ON CREATE SET q.created_at = datetime(), q.responses_json = $responses_json
             ON MATCH SET q.updated_at = datetime(), q.responses_json = $responses_json
+            MERGE (r)-[:PROVIDED]->(q)
             RETURN q
             """
 
         try:
             with self.driver.session() as session:
-                # Only include survey_id in params if it's provided
+                # Only include survey_id and username in params if they're provided
                 params = {
                     "recipient_key": recipient_key,
                     "section": section,
@@ -494,43 +514,45 @@ class GraphDatabase:
                 }
                 if survey_id:
                     params["survey_id"] = survey_id
+                if username:
+                    params["username"] = username
 
                 result = session.run(query, **params)
 
                 if result.single():
-                    logger.info(f"Questionnaire responses saved for recipient {recipient_key}, section {section}")
+                    logger.info(f"Survey responses saved for recipient {recipient_key}, section {section}")
                     return True
                 return False
 
         except Exception as e:
-            logger.error(f"Error saving questionnaire responses: {str(e)}")
+            logger.error(f"Error saving survey responses: {str(e)}")
             return False
 
     def get_questionnaire(self, recipient_key: str, section: str = None) -> List[Dict]:
         """
-        Get questionnaire responses for a recipient.
+        Get survey responses for a recipient.
 
         Args:
             recipient_key: Key identifier for the recipient
             section: Optional section to filter by
 
         Returns:
-            List[Dict]: List of questionnaire response dictionaries
+            List[Dict]: List of survey response dictionaries
         """
         if section:
             query = """
-            MATCH (q:Questionnaire {recipient_key: $recipient_key, section: $section})
+            MATCH (q:SurveyResponse {recipient_key: $recipient_key, section: $section})
             RETURN q.section AS section, q.responses_json AS responses_json, q.responses AS responses, 
                    q.created_at AS created_at, q.updated_at AS updated_at,
-                   q.survey_id AS survey_id
+                   q.survey_id AS survey_id, q.submitted_by AS submitted_by
             """
             params = {"recipient_key": recipient_key, "section": section}
         else:
             query = """
-            MATCH (q:Questionnaire {recipient_key: $recipient_key})
+            MATCH (q:SurveyResponse {recipient_key: $recipient_key})
             RETURN q.section AS section, q.responses_json AS responses_json, q.responses AS responses, 
                    q.created_at AS created_at, q.updated_at AS updated_at,
-                   q.survey_id AS survey_id
+                   q.survey_id AS survey_id, q.submitted_by AS submitted_by
             """
             params = {"recipient_key": recipient_key}
 
@@ -551,7 +573,7 @@ class GraphDatabase:
 
                 return records
         except Exception as e:
-            logger.error(f"Error getting questionnaire responses: {str(e)}")
+            logger.error(f"Error getting survey responses: {str(e)}")
             return []
 
     def log_interaction(self, logged_by: str, recipient_key: str, 

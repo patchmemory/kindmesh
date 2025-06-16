@@ -834,7 +834,8 @@ def render_friend_page():
                                     st.session_state.recipient_key,
                                     current_section['name'].lower(),
                                     responses,
-                                    st.session_state.selected_survey_id
+                                    survey_id=st.session_state.selected_survey_id,
+                                    username=st.session_state.username
                                 )
 
                                 if success:
@@ -977,64 +978,9 @@ def render_friend_page():
 
         # Recipient selection/creation
         if st.session_state.questionnaire_section == "recipient":
-            st.write("### Recipient Information")
-            st.write("Please select the recipient's key identifier. This will be used to link all questionnaire responses.")
-
-            # Get all recipient keys for dropdown
-            recipient_keys = db.get_all_recipient_keys()
-
-            if recipient_keys:
-                recipient_key = st.selectbox("Recipient Key (required)", 
-                                           options=[""] + recipient_keys, 
-                                           index=recipient_keys.index(st.session_state.recipient_key) + 1 if "recipient_key" in st.session_state and st.session_state.recipient_key in recipient_keys else 0,
-                                           key="questionnaire_recipient_key_dropdown")
-
-                # Auto-fill pseudonym when recipient key is selected
-                recipient_pseudonym = ""
-                if recipient_key:
-                    recipient = db.get_recipient(recipient_key)
-                    if recipient and recipient.get('pseudonym'):
-                        recipient_pseudonym = recipient['pseudonym']
-
-                recipient_pseudonym = st.text_input("Recipient Pseudonym (auto-filled if available)", 
-                                                  value=recipient_pseudonym,
-                                                  key="recipient_pseudonym_optional_5")
-            else:
-                st.warning("No recipients found. Please create recipients in the Recipient panel first.")
-                recipient_key = st.text_input("Recipient Key (required)", 
-                                            value=st.session_state.recipient_key if "recipient_key" in st.session_state else "", 
-                                            key="recipient_key_required_2")
-                recipient_pseudonym = st.text_input("Recipient Pseudonym (optional)", key="recipient_pseudonym_optional_5")
-
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button("Fill out Questionnaire"):
-                    if not recipient_key:
-                        st.error("Recipient Key is required")
-                    else:
-                        st.session_state.recipient_key = recipient_key
-                        st.session_state.questionnaire_section = "financial"
-                        st.rerun()
-
-            # Check if there are existing questionnaire responses for this recipient
-            if recipient_key:
-                existing_responses = db.get_questionnaire(recipient_key)
-                if existing_responses:
-                    st.write("### Existing Questionnaire Responses")
-                    for response in existing_responses:
-                        st.write(f"**Section:** {response['section']}")
-                        if response['updated_at']:
-                            st.write(f"**Last Updated:** {response['updated_at']}")
-                        elif response['created_at']:
-                            st.write(f"**Created:** {response['created_at']}")
-
-                    if st.button("View/Edit Existing Responses", key="view_edit_questionnaire_responses"):
-                        # Load existing responses into session state
-                        for response in existing_responses:
-                            if "responses" in response and response["responses"]:
-                                st.session_state.questionnaire_data[response["section"]] = response["responses"]
-                        st.session_state.questionnaire_section = "financial"
-                        st.rerun()
+            # Automatically redirect to financial section
+            st.session_state.questionnaire_section = "financial"
+            st.rerun()
 
         # Financial section
         elif st.session_state.questionnaire_section == "financial":
@@ -1099,7 +1045,8 @@ def render_friend_page():
                         success = db.save_questionnaire(
                             st.session_state.recipient_key,
                             "financial",
-                            data
+                            data,
+                            username=st.session_state.username
                         )
 
                         if success:
@@ -1176,7 +1123,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "employment",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1234,7 +1182,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "transportation",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1292,7 +1241,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "food",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1343,7 +1293,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "care",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1413,7 +1364,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "medical",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1473,7 +1425,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "benefits",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1537,7 +1490,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "mental_health",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1612,7 +1566,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "housing",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1665,7 +1620,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "legal",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1758,7 +1714,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "relationships",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1809,7 +1766,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "community",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1860,7 +1818,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "mentor",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
@@ -1911,7 +1870,8 @@ def render_friend_page():
                     success = db.save_questionnaire(
                         st.session_state.recipient_key,
                         "spiritual",
-                        data
+                        data,
+                        username=st.session_state.username
                     )
 
                     if success:
