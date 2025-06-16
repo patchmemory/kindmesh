@@ -5,9 +5,19 @@ Contains functions for displaying data and statistics.
 
 import streamlit as st
 import pandas as pd
+from typing import Any, Optional, Dict, List, Union
 
-def render_data_view(db, is_admin=False):
-    """Render data visualization components"""
+def render_data_view(db: Any, is_admin: bool = False) -> None:
+    """
+    Render data visualization components
+
+    This function displays summary statistics and visualizations of interaction data.
+    It shows different levels of detail based on the user's role.
+
+    Args:
+        db: Database connection object
+        is_admin: Whether the current user has admin privileges, determines the level of detail shown
+    """
     st.subheader("View Data")
 
     # Summary statistics

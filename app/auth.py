@@ -4,9 +4,20 @@ Contains functions for user login, logout, and rendering the login page.
 """
 
 import streamlit as st
+from typing import Any, Optional
 
-def login(username, password, db):
-    """Authenticate user and set session state"""
+def login(username: str, password: str, db: Any) -> bool:
+    """
+    Authenticate user and set session state
+
+    Args:
+        username: User's username
+        password: User's password
+        db: Database connection object
+
+    Returns:
+        bool: True if authentication successful, False otherwise
+    """
     success, user_data = db.authenticate_user(username, password)
     if success:
         st.session_state.authenticated = True
@@ -15,15 +26,24 @@ def login(username, password, db):
         return True
     return False
 
-def logout():
-    """Clear session state and log out user"""
+def logout() -> None:
+    """
+    Clear session state and log out user
+
+    Resets all authentication-related session state variables to their default values.
+    """
     st.session_state.authenticated = False
     st.session_state.username = None
     st.session_state.role = None
     st.session_state.admin_demotion_votes = {}
 
-def render_login_page(db):
-    """Render the login page"""
+def render_login_page(db: Any) -> None:
+    """
+    Render the login page with username and password input fields
+
+    Args:
+        db: Database connection object used for authentication
+    """
     st.title("KindMesh - Login")
 
     with st.form("login_form"):

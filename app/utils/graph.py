@@ -180,7 +180,20 @@ class GraphDatabase:
 
         Returns:
             bool: True if user created successfully, False otherwise
+
+        Raises:
+            ValueError: If the password does not meet the security requirements
         """
+        # Import here to avoid circular imports
+        from app.password_policy import validate_password
+
+        # Validate the password
+        is_valid, errors = validate_password(password)
+        if not is_valid:
+            error_msg = "; ".join(errors)
+            logger.warning(f"Password validation failed for new user: {error_msg}")
+            raise ValueError(f"Password does not meet security requirements: {error_msg}")
+
         # Hash the password
         password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 

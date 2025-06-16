@@ -4,9 +4,20 @@ Contains functions for logging resource distributions.
 """
 
 import streamlit as st
+from typing import Any
 
-def log_interaction_form(db, username):
-    """Render and process the interaction logging form"""
+def log_interaction_form(db: Any, username: str) -> None:
+    """
+    Render and process the interaction logging form
+
+    This function displays a form for logging resource distributions to recipients.
+    It allows users to select or create recipients, specify the type of resource,
+    and add notes about the interaction.
+
+    Args:
+        db: Database connection object
+        username: Username of the currently logged-in user
+    """
     st.subheader("Log Resource Distribution")
 
     # Get all recipient keys for dropdown

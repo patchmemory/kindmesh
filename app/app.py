@@ -1,6 +1,8 @@
 """
 KindMesh - A lightweight, secure, browser-based app for resource distribution tracking
 
+Version: 1.0.0
+
 This Streamlit application provides a user interface for:
 - User authentication and management
 - Tracking resource distributions
@@ -73,6 +75,13 @@ def render_greeter_page():
 
     st.write("As a Greeter, you can create new users for the system.")
 
+    # Import password policy functions
+    from password_policy import get_password_requirements
+
+    # Display password requirements
+    with st.expander("Password Requirements", expanded=False):
+        st.markdown(get_password_requirements())
+
     with st.form("create_user_form"):
         st.subheader("Create New User")
         new_username = st.text_input("Username", key="greeter_new_username")
@@ -86,15 +95,18 @@ def render_greeter_page():
             elif new_password != confirm_password:
                 st.error("Passwords do not match")
             else:
-                success = db.create_user(
-                    username=new_username,
-                    password=new_password,
-                    created_by=st.session_state.username
-                )
-                if success:
-                    st.success(f"User {new_username} created successfully")
-                else:
-                    st.error("Failed to create user")
+                try:
+                    success = db.create_user(
+                        username=new_username,
+                        password=new_password,
+                        created_by=st.session_state.username
+                    )
+                    if success:
+                        st.success(f"User {new_username} created successfully")
+                    else:
+                        st.error("Failed to create user")
+                except ValueError as e:
+                    st.error(str(e))
 
 def render_admin_page():
     """Render the page for users with the Admin role"""
