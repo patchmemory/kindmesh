@@ -1,5 +1,5 @@
 """
-Export module for KindMesh application.
+Export module for kindmesh application.
 Contains functions for exporting data.
 """
 

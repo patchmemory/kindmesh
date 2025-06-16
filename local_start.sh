@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# KindMesh Local Starter
-# This script starts the KindMesh application locally without Docker
+# kindmesh Local Starter
+# This script starts the kindmesh application locally without Docker
 
 echo "=== KindMesh Local Starter ==="
 

@@ -1,5 +1,5 @@
 """
-Enhanced interaction module for KindMesh application.
+Enhanced interaction module for kindmesh application.
 Contains functions for logging resource distributions with batch entry integration.
 """
 

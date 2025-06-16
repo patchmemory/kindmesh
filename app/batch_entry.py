@@ -1,5 +1,5 @@
 """
-Batch entry module for KindMesh application.
+Batch entry module for kindmesh application.
 Contains functions for batch entry from spreadsheets.
 """
 

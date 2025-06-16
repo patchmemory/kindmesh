@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Test script for KindMesh application setup
+# Test script for kindmesh application setup
 # This script verifies that the Docker containers can be built and started
 
 echo "=== KindMesh Setup Test ==="

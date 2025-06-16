@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# KindMesh Singularity Installer
+# kindmesh Singularity Installer
 # This script installs Singularity if it is not already installed
 
 echo "=== KindMesh Singularity Installer ==="

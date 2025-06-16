@@ -1,5 +1,5 @@
 """
-Data management module for KindMesh application.
+Data management module for kindmesh application.
 Contains functions for viewing and exporting data.
 """
 

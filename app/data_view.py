@@ -1,5 +1,5 @@
 """
-Data visualization module for KindMesh application.
+Data visualization module for kindmesh application.
 Contains functions for displaying data and statistics.
 """
 

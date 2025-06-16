@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# KindMesh Singularity Container Builder
+# kindmesh Singularity Container Builder
 # This script builds a Singularity container for Neo4j
 
 echo "=== KindMesh Singularity Container Builder ==="

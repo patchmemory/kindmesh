@@ -1,5 +1,5 @@
 """
-Survey module for KindMesh application.
+Survey module for kindmesh application.
 Contains functions for survey creation, editing, and completion.
 """
 

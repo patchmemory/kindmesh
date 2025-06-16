@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# KindMesh Local Setup
-# This script sets up the KindMesh application for local development without Docker
+# kindmesh Local Setup
+# This script sets up the kindmesh application for local development without Docker
 
 # Check for cleanup flag
 CLEANUP=false
@@ -96,6 +96,14 @@ pip install --upgrade pip
 pip install -r requirements.txt
 if [ $? -ne 0 ]; then
     echo "Error: Failed to install dependencies"
+    exit 1
+fi
+
+# Install kindmesh package in development mode
+echo "Installing kindmesh package in development mode..."
+pip install -e .
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to install kindmesh package"
     exit 1
 fi
 

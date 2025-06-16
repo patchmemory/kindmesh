@@ -1,5 +1,5 @@
 """
-Recipient management module for KindMesh application.
+Recipient management module for kindmesh application.
 Contains functions for recipient lookup and creation.
 """
 

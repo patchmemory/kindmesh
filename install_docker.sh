@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# KindMesh Docker Installer
+# kindmesh Docker Installer
 # This script installs Docker and Docker Compose if they are not already installed
 
 echo "=== KindMesh Docker Installer ==="

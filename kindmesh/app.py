@@ -20,19 +20,19 @@ import tracemalloc
 tracemalloc.start()
 
 # Import the graph database module
-from utils.graph import GraphDatabase
+from kindmesh.utils.graph import GraphDatabase
 
 # Import application modules
-from auth import login, logout, render_login_page
-from interaction import log_interaction_form
-from data_view import render_data_view
-from export import render_export_data
-from user_management import render_user_management
-from recipient import render_recipient_management
-from batch_entry import render_batch_entry
-from survey import render_survey_management
-from enhanced_interaction import enhanced_log_interaction_form
-from manage_data import render_manage_data
+from kindmesh.auth import login, logout, render_login_page
+from kindmesh.interaction import log_interaction_form
+from kindmesh.data_view import render_data_view
+from kindmesh.export import render_export_data
+from kindmesh.user_management import render_user_management
+from kindmesh.recipient import render_recipient_management
+from kindmesh.batch_entry import render_batch_entry
+from kindmesh.survey import render_survey_management
+from kindmesh.enhanced_interaction import enhanced_log_interaction_form
+from kindmesh.manage_data import render_manage_data
 
 # Page configuration
 st.set_page_config(
@@ -57,7 +57,7 @@ if "admin_demotion_votes" not in st.session_state:
 def get_database_connection():
     """Create and cache the database connection"""
     # Import here to ensure we get the latest version of the class
-    from utils.graph import GraphDatabase
+    from kindmesh.utils.graph import GraphDatabase
     return GraphDatabase(
         uri=os.environ.get("NEO4J_URI", "bolt://neo4j:7687"),
         user=os.environ.get("NEO4J_USER", "neo4j"),
@@ -76,7 +76,7 @@ def render_greeter_page():
     st.write("As a Greeter, you can create new users for the system.")
 
     # Import password policy functions
-    from password_policy import get_password_requirements
+    from kindmesh.password_policy import get_password_requirements
 
     # Display password requirements
     with st.expander("Password Requirements", expanded=False):

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# KindMesh Application Stopper
-# This script stops the KindMesh application running in Docker Compose
+# kindmesh Application Stopper
+# This script stops the kindmesh application running in Docker Compose
 
 echo "=== KindMesh Application Stopper ==="
 

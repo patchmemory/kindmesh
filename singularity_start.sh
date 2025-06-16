@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# KindMesh Singularity Container Starter
+# kindmesh Singularity Container Starter
 # This script starts the Neo4j Singularity container
 
 echo "=== KindMesh Singularity Container Starter ==="

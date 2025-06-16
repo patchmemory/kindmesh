@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kindmesh"
+version = "0.1.0"
+description = "A lightweight, secure, browser-based app for nonprofits to distribute resources"
+readme = "README.md"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "streamlit>=1.32.0",
+    "neo4j>=5.14.0",
+    "python-dotenv>=1.0.0",
+    "bcrypt>=4.0.1",
+    "numpy>=1.26.3",
+    "pandas>=2.1.4",
+    "pydantic>=2.5.3",
+    "pyvis>=0.3.2",
+    "altair>=5.1.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/kindmesh"
+"Bug Tracker" = "https://github.com/yourusername/kindmesh/issues"
+
+[tool.setuptools]
+packages = ["kindmesh"]
+
+[project.scripts]
+kindmesh = "kindmesh.app:main"

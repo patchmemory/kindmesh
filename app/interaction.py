@@ -1,5 +1,5 @@
 """
-Interaction module for KindMesh application.
+Interaction module for kindmesh application.
 Contains functions for logging resource distributions.
 """
 

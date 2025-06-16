@@ -1,5 +1,5 @@
 """
-Authentication module for KindMesh application.
+Authentication module for kindmesh application.
 Contains functions for user login, logout, and rendering the login page.
 """
 
@@ -44,7 +44,7 @@ def render_login_page(db: Any) -> None:
     Args:
         db: Database connection object used for authentication
     """
-    st.title("KindMesh - Login")
+    st.title("kindmesh - Login")
 
     with st.form("login_form"):
         username = st.text_input("Username", key="login_username")

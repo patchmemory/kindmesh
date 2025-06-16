@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# KindMesh Application Launcher
-# This script launches the KindMesh application using Docker Compose
+# kindmesh Application Launcher
+# This script launches the kindmesh application using Docker Compose
 
 echo "=== KindMesh Application Launcher ==="
 

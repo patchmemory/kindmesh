@@ -1,5 +1,5 @@
 """
-Password policy module for KindMesh application.
+Password policy module for kindmesh application.
 Contains functions for validating password strength and complexity.
 """
 

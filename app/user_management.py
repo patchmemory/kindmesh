@@ -1,5 +1,5 @@
 """
-User management module for KindMesh application.
+User management module for kindmesh application.
 Contains functions for user management (admin only).
 """
 
