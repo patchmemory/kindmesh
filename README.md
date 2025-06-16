@@ -56,7 +56,23 @@ There are two ways to run kindmesh:
 - [Docker Compose](https://docs.docker.com/compose/install/) (version 1.27 or later)
 - Git (for cloning the repository)
 
-#### Installation
+#### Automated Installation
+
+If you don't have Docker and Docker Compose installed, you can use the provided installation script:
+
+```
+chmod +x install_docker.sh
+./install_docker.sh
+```
+
+This script will:
+- Detect your operating system
+- Install Docker and Docker Compose if they are not already installed
+- Set up appropriate permissions
+- Verify the installations
+- Optionally start the application
+
+#### Manual Installation
 
 1. Clone the repository:
    ```
@@ -136,7 +152,22 @@ Singularity is a container platform designed for scientific computing and high-p
 - [Singularity](https://sylabs.io/guides/latest/user-guide/quick_start.html) (version 3.5 or later)
 - Git (for cloning the repository)
 
-#### Installation
+#### Automated Installation
+
+If you don't have Singularity installed, you can use the provided installation script:
+
+```
+chmod +x install_singularity.sh
+./install_singularity.sh
+```
+
+This script will:
+- Detect your operating system
+- Install Singularity and its dependencies if they are not already installed
+- Verify the installation
+- Optionally build and start the Neo4j container
+
+#### Manual Installation
 
 1. Clone the repository:
    ```
