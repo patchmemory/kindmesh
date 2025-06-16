@@ -64,12 +64,16 @@ There are two ways to run kindmesh:
    cd kindmesh
    ```
 
-2. Make the startup scripts executable:
+2. You can start the application in one of two ways:
+
+   **Option A: Using the provided scripts (recommended for first-time users)**
+
+   Make the startup scripts executable:
    ```
    chmod +x start.sh stop.sh
    ```
 
-3. Start the application using the provided script:
+   Start the application using the provided script:
    ```
    ./start.sh
    ```
@@ -78,7 +82,15 @@ There are two ways to run kindmesh:
    - Start the Neo4j database and Streamlit application
    - Provide instructions for accessing the application
 
-4. Access the application:
+   **Option B: Using Docker Compose directly**
+
+   Start the Neo4j database and Streamlit application:
+   ```
+   docker compose up -d
+   ```
+   This command starts all services defined in the docker-compose.yml file in detached mode.
+
+3. Access the application:
    - Open your browser and navigate to `http://localhost:8501`
    - Log in with the default credentials:
      - Username: `Hello`
@@ -90,17 +102,92 @@ There are two ways to run kindmesh:
 
 #### Stopping the Application
 
-To stop the application, use the provided script:
+You can stop the application in one of two ways:
+
+**Option A: Using the provided script**
 ```
 ./stop.sh
 ```
 
-To stop and remove all data (including the database), run:
+**Option B: Using Docker Compose directly**
 ```
-docker-compose down -v
+docker compose down
 ```
 
-### Option 2: Local Installation
+To stop and remove all data (including the database), run:
+```
+docker compose down -v
+```
+
+### Option 3: Local Installation
+
+#### Prerequisites
+
+- Python 3.12 or later (required for latest Streamlit features)
+- pip (Python package manager)
+- Neo4j Community Edition (installed separately)
+
+### Option 2: Using Singularity
+
+Singularity is a container platform designed for scientific computing and high-performance computing (HPC) environments. This option is useful for users who need to run Neo4j in environments where Docker is not available or not allowed.
+
+#### Prerequisites
+
+- [Singularity](https://sylabs.io/guides/latest/user-guide/quick_start.html) (version 3.5 or later)
+- Git (for cloning the repository)
+
+#### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-organization/kindmesh.git
+   cd kindmesh
+   ```
+
+2. Make the Singularity scripts executable:
+   ```
+   chmod +x singularity_build.sh singularity_start.sh
+   ```
+
+3. Build the Singularity container:
+   ```
+   ./singularity_build.sh
+   ```
+   This script will:
+   - Check if Singularity is installed
+   - Build a Singularity container for Neo4j based on the neo4j.def definition file
+
+4. Start the Neo4j Singularity container:
+   ```
+   ./singularity_start.sh
+   ```
+   This script will:
+   - Check if the Singularity container exists
+   - Create directories for data persistence
+   - Start the container with the appropriate bind mounts
+   - Provide instructions for accessing Neo4j
+
+5. Access Neo4j:
+   - Open your browser and navigate to `http://localhost:7474`
+   - Log in with the default credentials:
+     - Username: `neo4j`
+     - Password: `kindmesh`
+
+6. Start the Streamlit application separately:
+   ```
+   ./local_setup.sh
+   ./local_start.sh
+   ```
+   This will set up the Python environment and start the Streamlit application.
+
+#### Stopping the Container
+
+To stop the Singularity container, run:
+```
+singularity instance stop neo4j
+```
+
+### Option 3: Local Installation
 
 #### Prerequisites
 

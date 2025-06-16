@@ -1,0 +1,21 @@
+Bootstrap: docker
+From: neo4j:4.4-community
+
+%environment
+    export NEO4J_AUTH=neo4j/kindmesh
+    export NEO4J_apoc_export_file_enabled=true
+    export NEO4J_apoc_import_file_enabled=true
+    export NEO4J_apoc_import_file_use__neo4j__config=true
+    export NEO4J_dbms_security_procedures_unrestricted=apoc.*
+
+%files
+    scripts/init-db.cypher /var/lib/neo4j/import/init-db.cypher
+
+%post
+    mkdir -p /data
+    mkdir -p /logs
+    mkdir -p /var/lib/neo4j/import
+    mkdir -p /plugins
+
+%startscript
+    /docker-entrypoint.sh neo4j
