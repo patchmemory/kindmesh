@@ -1,0 +1,47 @@
+services:
+  neo4j:
+    image: neo4j:4.4-community
+    container_name: kindmesh-neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/kindmesh  # Default username/password
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+      - ./scripts/init-db.cypher:/var/lib/neo4j/import/init-db.cypher
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "neo4j", "-p", "kindmesh", "MATCH () RETURN count(*) as count"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kindmesh-app
+    ports:
+      - "8501:8501"  # Streamlit default port
+    depends_on:
+      - neo4j
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=kindmesh
+    volumes:
+      - ./app:/app
+    command: streamlit run /app/app.py
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:
