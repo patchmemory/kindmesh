@@ -35,7 +35,7 @@ This project and everyone participating in it is governed by the KindMesh Code o
 
 Before submitting a bug report:
 
-1. Check the [issue tracker](https://github.com/your-organization/kindmesh/issues) to see if the issue has already been reported
+1. Check the [issue tracker](https://github.com/patchmemory/kindmesh/issues) to see if the issue has already been reported
 2. Update your software to the latest version to see if the issue persists
 
 When submitting a bug report:
@@ -138,7 +138,7 @@ Enhancement suggestions are tracked as GitHub issues. When suggesting an enhance
 
 ## Community
 
-- Join our community discussions on [GitHub Discussions](https://github.com/your-organization/kindmesh/discussions)
+- Join our community discussions on [GitHub Discussions](https://github.com/patchmemory/kindmesh/discussions)
 - Follow the project on social media for updates
 - Participate in community events and meetings
 

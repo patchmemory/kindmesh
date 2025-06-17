@@ -76,7 +76,7 @@ This script will:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-organization/kindmesh.git
+   git clone https://github.com/patchmemory/kindmesh.git
    cd kindmesh
    ```
 
@@ -171,7 +171,7 @@ This script will:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-organization/kindmesh.git
+   git clone https://github.com/patchmemory/kindmesh.git
    cd kindmesh
    ```
 
@@ -230,7 +230,7 @@ singularity instance stop neo4j
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-organization/kindmesh.git
+   git clone https://github.com/patchmemory/kindmesh.git
    cd kindmesh
    ```
 
@@ -560,3 +560,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Neo4j for the graph database
 - Streamlit for the web interface
 - The nonprofit community for their valuable feedback
+- Special thanks to Junie for significant contributions to the project

@@ -119,7 +119,9 @@ This document outlines the process for preparing and executing a release of the 
 
 2. Push the Docker image to a registry (if applicable):
    ```bash
+# Note: Skip this step if you do not have a Docker registry
    docker tag kindmesh:v[VERSION] registry.example.com/kindmesh:v[VERSION]
+# Note: Skip this step if you do not have a Docker registry
    docker push registry.example.com/kindmesh:v[VERSION]
    ```
 

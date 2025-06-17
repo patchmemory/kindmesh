@@ -12,7 +12,7 @@ pip install kindmesh
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/kindmesh.git
+   git clone https://github.com/patchmemory/kindmesh.git
    cd kindmesh
    ```
 
@@ -32,7 +32,7 @@ For a complete local development environment:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/kindmesh.git
+   git clone https://github.com/patchmemory/kindmesh.git
    cd kindmesh
    ```
 
